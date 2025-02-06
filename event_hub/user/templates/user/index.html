@@ -1,0 +1,23 @@
+{% extends 'user/user_base.html' %}
+{% load static %}
+
+{% block title %}
+EventHub account
+{% endblock title %}
+
+{% block content %}
+    <div class="main-user-content">
+        <div class="personal-information">
+            <img class="user-picture" src="{% static 'user/img/man.jfif' %}">
+            <div class="user-data">
+                <ul>
+                    {% for el in user_information %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="user-biography">
+            <p>User info...</p>
+        </div>
+    </div>
+{% endblock content %}
