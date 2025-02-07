@@ -1,0 +1,31 @@
+{% extends 'event/event_base.html' %}
+{% load static %}
+
+{% block title %}
+    Events
+{% endblock title %}
+
+{% block content %}
+    <div class="events-list-page-txt">
+        <h1 class="name-list">Events</h1>
+        <div class="event-list">
+            <ul>
+                {% for event in data %}
+                    <li class="event-container">
+                        <div class="img-and-details">
+                            <img src="{% static 'img/event1.jpg' %}" class="event-image">
+                            <a href="{% url 'event_detail' slug=event.slug %}"><button class="event-details">Details</button></a>
+                        </div>
+                        <div class="event-info">
+                            <p><strong>Title:</strong> {{ event.title }}</p>
+                            <p><strong>Date:</strong> {{ event.date_time }}</p>
+                            <p><strong>Location:</strong> {{ event.location }}</p>
+                            <p><strong>Max Participants:</strong> {{ event.max_participants }}</p>
+                            <p><strong>Creator:</strong> {{ event.creator.username }}</p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock content %}

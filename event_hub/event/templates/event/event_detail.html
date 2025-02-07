@@ -1,0 +1,21 @@
+{% extends 'event/event_base.html' %}
+{% load static %}
+
+{% block title %}
+    Event
+{% endblock title %}
+
+{% block content %}
+    <div class="event-details-container">
+        <section class="event-details-img-and-information">
+            <img class="event-details-img-container" src="{% static 'img/event1.jpg' %}">
+            <div class="event-details-event-information"></div>
+        </section>
+        <section class="event-details-description">
+            <p>Description</p>
+        </section>
+        <section class="event-details-participants">
+            <p>List participants</p>
+        </section>
+    </div>
+{% endblock content %}

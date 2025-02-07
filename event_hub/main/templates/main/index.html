@@ -1,0 +1,21 @@
+{% extends 'main/main_base.html' %}
+{% load static %}
+
+{% block title %}
+EventHub
+{% endblock title %}
+
+{% block content %}
+    <div class="home-page-welcome-txt">
+        <h1>Welcome!</h1>
+        <p class="event-welcome-txt">EventHub — is an event management platform where users can create events,
+            register for them, and interact with other participants. Each user has their own profile with
+            personal information and a photo. They can view available active events, register for them,
+            or create new ones. Each event has its own page with details, a list of participants, and
+            the ability to comment. This allows you to efficiently organize and participate in events.</p>
+        <div class="auth-button-container">
+            <button class="login-btn">Login</button>
+            <button class="reg-btn">Register</button>
+        </div>
+    </div>
+{% endblock content%}
