@@ -1,0 +1,27 @@
+{% extends 'profile/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'profile/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'profile/css/register.css' %}">
+{% endblock css %}
+
+{% block title %}
+    Registration
+{% endblock title %}
+
+{% block content %}
+    <div class="registration-form">
+        <h1>Registration</h1>
+        <form method="post">
+            {{ form.username }}<br>
+            {{ form.first_name }}<br>
+            {{ form.last_name }}<br>
+            {{ form.email }}<br>
+            {{ form.password }}<br>
+            <span>{{ errors }}</span>
+            <button class="btn btn-success" type="submit">Registration</button>
+            {% csrf_token %}
+        </form>
+    </div>
+{% endblock content %}

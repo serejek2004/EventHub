@@ -1,0 +1,56 @@
+.event-details-container {
+    width: 80%;
+    height: 100vh;
+    margin-top: 5%;
+    margin-left: 10%;
+    color: white;
+}
+
+.event-details-img-and-information {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.event-details-img-container {
+    max-width: 40%;
+    max-height: 500px;
+    width: auto;
+    height: auto;
+}
+
+.event-details-event-information {
+    margin-top: 5%;
+    margin-left: 5%;
+}
+
+.event-details-description {
+    width: 95%;
+    margin-top: 10px;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    text-align: justify;
+}
+
+.event-details-participants {
+    width: 97.5%;
+    margin-top: 2.5%;
+    margin-left: 2.5%;
+}
+
+.event-details-update-btn {
+    margin-top: 2.5%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.event-update-btn {
+    background-color: #eb5959;
+    border-width: 0;
+    border-radius: 5px;
+}
