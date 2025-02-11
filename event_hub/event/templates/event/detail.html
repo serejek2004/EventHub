@@ -1,0 +1,43 @@
+{% extends 'event/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'event/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'event/css/detail.css' %}">
+{% endblock css %}
+
+{% block title %}
+    {{ event.title }}
+{% endblock title %}
+
+{% block content %}
+    <div class="event-details-container">
+        <section class="event-details-img-and-information">
+            <img class="event-details-img-container" src="{{ event.event_image.url }}">
+            <div class="event-details-event-information">
+                <p><strong>Title:</strong> {{ event.title }}</p>
+                <p><strong>Date:</strong> {{ event.date_time }}</p>
+                <p><strong>Location:</strong> {{ event.location }}</p>
+                <p><strong>Max Participants:</strong> {{ event.max_participants }}</p>
+                <p><strong>Creator:</strong> {{ event.creator.username }}</p>
+            </div>
+        </section>
+        <section class="event-details-description">
+            <p><strong>Description:</strong> {{ event.description|linebreaks }}</p>
+        </section>
+        <section class="event-details-participants">
+            <p><strong>Participants ({{ event.participants }})</strong></p>
+        </section>
+        <section class="event-details-update-btn">
+            {% if event.creator.id == request.user.id %}
+                <a href="{% url 'event_update' event.slug %}">
+                    <button class="event-update-btn">Edit Event</button>
+                </a>
+                <form class="form-for-delete" method="post" action="{% url 'event_delete' event.slug %}">
+                    {% csrf_token %}
+                    <button type="submit" class="event-update-btn">Delete Event</button>
+                </form>
+            {% endif %}
+        </section>
+    </div>
+{% endblock content %}

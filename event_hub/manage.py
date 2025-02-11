@@ -1,7 +1,5 @@
 import os
 import sys
-from django.utils.text import slugify
-from event.models import Event
 
 
 def main():
@@ -18,8 +16,4 @@ def main():
 
 
 if __name__ == '__main__':
-    for event in Event.objects.all():
-        if not event.slug:
-            event.slug = slugify(event.title)
-            event.save()
     main()

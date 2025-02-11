@@ -1,0 +1,25 @@
+{% extends 'profile/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'profile/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'profile/css/login.css' %}">
+{% endblock css %}
+
+{% block title %}
+    Login
+{% endblock title %}
+
+{% block content %}
+    <div class="login-form">
+        <h1>Login</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% if errors %}
+                <div class="alert alert-danger">{{ errors }}</div>
+            {% endif %}
+            <button type="submit">Login</button>
+        </form>
+    </div>
+{% endblock content %}

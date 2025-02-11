@@ -1,0 +1,41 @@
+body {
+    background-color: #282828;
+    overflow: hidden;
+}
+
+.home-page-welcome-txt {
+    color: white;
+    width: 50%;
+    height: 100%;
+    margin-left: 25%;
+    margin-top: 15%;
+    text-align: center;
+}
+
+.event-welcome-txt {
+    font-size: 22px;
+}
+
+.auth-button-container {
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+a {
+    width: 20%;
+}
+
+.reg-login-logout-btn {
+    width: 100%;
+    color: #171717;
+    font-size: 28px;
+    background-color: #eb5959;
+    border-radius: 20px;
+    border-width: 0;
+    transition: transform .2s ease;
+}
+
+.reg-login-logout-btn:active {
+    background-color: goldenrod;
+}

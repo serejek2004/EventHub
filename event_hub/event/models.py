@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 
 
@@ -12,15 +13,18 @@ class Event(models.Model):
     max_participants = models.PositiveIntegerField()
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_events')
     participants = models.ManyToManyField(User, related_name='registered_events', blank=True)
-    event_image = models.ImageField(upload_to='event_images', blank=True)
+    event_image = models.ImageField(upload_to='static/event_images', blank=True)
 
     def __str__(self):
         return f"{self.title} ({self.date_time.strftime('%d-%m-%Y %H:%M')})"
 
     def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
+        self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        self.save()
+        return reverse('event_detail', kwargs={'slug': self.slug})
 
     class Meta:
         ordering = ['-date_time']

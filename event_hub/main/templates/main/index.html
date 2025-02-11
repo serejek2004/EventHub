@@ -1,4 +1,4 @@
-{% extends 'main/main_base.html' %}
+{% extends 'main/base.html' %}
 {% load static %}
 
 {% block title %}
@@ -14,8 +14,12 @@ EventHub
             or create new ones. Each event has its own page with details, a list of participants, and
             the ability to comment. This allows you to efficiently organize and participate in events.</p>
         <div class="auth-button-container">
-            <button class="login-btn">Login</button>
-            <button class="reg-btn">Register</button>
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}"><button class="reg-login-logout-btn">Logout</button></a>
+            {% else %}
+                <a href="{% url 'login' %}"><button class="reg-login-logout-btn">Login</button></a>
+                <a href="{% url 'register' %}"><button class="reg-login-logout-btn">Register</button></a>
+            {% endif %}
         </div>
     </div>
 {% endblock content%}

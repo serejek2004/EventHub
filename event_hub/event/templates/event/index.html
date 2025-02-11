@@ -1,5 +1,10 @@
-{% extends 'event/event_base.html' %}
+{% extends 'event/base.html' %}
 {% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'event/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'event/css/index.css' %}">
+{% endblock css %}
 
 {% block title %}
     Events
@@ -13,8 +18,8 @@
                 {% for event in data %}
                     <li class="event-container">
                         <div class="img-and-details">
-                            <img src="{% static 'img/event1.jpg' %}" class="event-image">
-                            <a href="{% url 'event_detail' slug=event.slug %}"><button class="event-details">Details</button></a>
+                            <img class="event-image" src="{{ event.event_image.url }}" >
+                            <a class="a-event-details" href="{% url 'event_detail' slug=event.slug %}"><button class="event-details">Details</button></a>
                         </div>
                         <div class="event-info">
                             <p><strong>Title:</strong> {{ event.title }}</p>

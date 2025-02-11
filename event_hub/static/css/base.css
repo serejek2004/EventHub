@@ -36,16 +36,15 @@ aside a {
 
 aside ul {
     list-style: none;
+    padding-left: 0;
 }
 
 aside ul i {
-    width: 15px;
     margin-right: 2px;
 }
 
 aside ul li {
-    text-align: left;
-    margin-left: 30%;
+    text-align: center;
     color: #fff;
     display: block;
     margin-top: 20px;
