@@ -1,4 +1,4 @@
-.registration-form {
+.profile-update-form {
     width: 50%;
     margin-top: 5%;
     margin-left: 25%;
@@ -18,9 +18,4 @@ form {
 
 btn btn-success {
     width: 20%;
-}
-
-ul {
-    list-style: none;
-    padding-left: 0;
 }

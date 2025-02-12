@@ -3,6 +3,7 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'event/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/base.css' %}">
     <link rel="stylesheet" href="{% static 'event/css/create.css' %}">
 {% endblock css %}
 
@@ -11,18 +12,38 @@
 {% endblock title %}
 
 {% block content %}
-    <div class="Event-add-form">
-        <h1>Create event form</h1>
-        <form method="post" enctype="multipart/form-data">
-            {{ form.title }}<br>
-            {{ form.description }}<br>
-            {{ form.location }}<br>
-            {{ form.date_time }}<br>
-            {{ form.max_participants }}<br>
-            {{ form.event_image }}<br>
-            <span>{{ errors }}</span>
-            <button class="btn btn-success" type="submit">Add event</button>
-            {% csrf_token %}
-        </form>
-    </div>
+    {% if user.is_authenticated %}
+        <div class="Event-add-form">
+            <h1>Create event form</h1>
+            <form method="post" enctype="multipart/form-data">
+                {{ form.title }}<br>
+                {{ form.description }}<br>
+                {{ form.location }}<br>
+                {{ form.date_time }}<br>
+                {{ form.max_participants }}<br>
+                {{ form.event_image }}<br>
+                {% if errors %}
+                    {% for field in form %}
+                        {% if field.errors %}
+                            <ul class="errorlist" style="list-style: none; color: #eb5959; padding: 0">
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <button class="btn btn-success" type="submit">Add event</button>
+                {% csrf_token %}
+            </form>
+        </div>
+    {% else %}
+        <section class="not-auth-user-information">
+            <h1>Log in to create events</h1>
+        </section>
+        <section class="not-auth-user-buttons">
+            <a href="{% url 'login' %}"><button class="reg-login-logout-btn">Login</button></a>
+            <a href="{% url 'register' %}"><button class="reg-login-logout-btn">Register</button></a>
+        </section>
+    {% endif %}
 {% endblock content %}

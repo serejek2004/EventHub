@@ -3,6 +3,8 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
+from profile.models import UserProfile
+
 
 class Event(models.Model):
     title = models.CharField(max_length=255, unique=True)
@@ -10,10 +12,10 @@ class Event(models.Model):
     description = models.TextField()
     date_time = models.DateTimeField()
     location = models.CharField(max_length=255)
-    max_participants = models.PositiveIntegerField()
+    max_participants = models.PositiveIntegerField(null=False)
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_events')
-    participants = models.ManyToManyField(User, related_name='registered_events', blank=True)
-    event_image = models.ImageField(upload_to='static/event_images', blank=True)
+    participants = models.ManyToManyField(UserProfile, related_name='registered_events', blank=True)
+    event_image = models.ImageField(upload_to='static/event_images', null=False)
 
     def __str__(self):
         return f"{self.title} ({self.date_time.strftime('%d-%m-%Y %H:%M')})"

@@ -19,3 +19,24 @@ form {
 btn btn-success {
     width: 20%;
 }
+
+.not-auth-user-information {
+    margin-top: 20%;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.not-auth-user-buttons {
+    width: 50%;
+    height: 50%;
+    margin-left: 25%;
+    margin-top: 5%;
+    display: flex;
+    justify-items: center;
+    justify-content: space-evenly;
+}
+
+.not-auth-user-information a {
+    width: 20%;
+}

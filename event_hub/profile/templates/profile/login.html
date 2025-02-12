@@ -14,12 +14,15 @@
     <div class="login-form">
         <h1>Login</h1>
         <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
+            {{ form.username }}<br>
+            {{ form.password }}<br>
+
             {% if errors %}
-                <div class="alert alert-danger">{{ errors }}</div>
+                <p style="color: #eb5959">Wrong username or password</p>
             {% endif %}
-            <button type="submit">Login</button>
+
+            <button class="btn btn-success" type="submit">Login</button>
+            {% csrf_token %}
         </form>
     </div>
 {% endblock content %}

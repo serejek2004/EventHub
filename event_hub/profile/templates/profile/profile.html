@@ -3,11 +3,54 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'profile/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/base.css' %}">
     <link rel="stylesheet" href="{% static 'profile/css/profile.css' %}">
 {% endblock css %}
 
 {% block title %}
+    {{ profile.user.username|capfirst }}
 {% endblock title %}
 
 {% block content %}
+    {% if user.is_authenticated %}
+        <div class="profile-content">
+            <section class="profile-image-and-information">
+                <div class="profile-image">
+                    {% if profile.profile_picture %}
+                        <img src="{{ profile.profile_picture.url }}"/>
+                    {% else %}
+                        <img src="{% static 'img/image-solid.svg' %}">
+                    {% endif %}
+                </div>
+                <div class="profile-information">
+                    <ul>
+                        <li><span>First Name:</span> <p>{{ profile.user.first_name }}</p></li>
+                        <li><span>Last Name:</span> <p>{{ profile.user.last_name }}</p></li>
+                        <li><span>Email:</span> <p>{{ profile.user.email }}</p></li>
+                        <li><span>Age:</span> <p>{{ profile.age }}</p></li>
+                        <li><span>Registered from:</span> <p>{{ profile.user.date_joined }}</p></li>
+                        <li><span>Last active:</span> <p>{{ profile.user.last_login }}</p></li>
+                    </ul>
+                </div>
+            </section>
+            <section class="profile-biography">
+                <p>{{ profile.biography|linebreaks }}</p>
+            </section>
+            {% if is_owner %}
+                <section class="profile-edit-button">
+                    <a href="{% url 'profile_update' slug=profile.slug %}">
+                        <button class="reg-login-logout-btn" style="width: 50%">Edit profile</button>
+                    </a>
+                </section>
+            {% endif %}
+        </div>
+    {% else %}
+        <section class="not-auth-user-information">
+            <h1>Log in to view profiles</h1>
+        </section>
+        <section class="not-auth-user-buttons">
+            <a href="{% url 'login' %}"><button class="reg-login-logout-btn">Login</button></a>
+            <a href="{% url 'register' %}"><button class="reg-login-logout-btn">Register</button></a>
+        </section>
+    {% endif %}
 {% endblock content %}

@@ -1,38 +1,46 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.http.response import HttpResponseForbidden
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import DetailView, UpdateView, DeleteView
 
+from profile.models import UserProfile
 from .models import Event
 from .forms import EventForm
 
 def index(request):
     events = Event.objects.all().order_by('date_time')
-    return render(request, 'event/index.html', {'data': events})
+    return render(request, 'event/index.html', {'data': events, 'user': request.user})
 
-class EventDetailView(DetailView):
-    model = Event
-    template_name = 'event/detail.html'
-    context_object_name = 'event'
+def event_details(request, slug):
+    event = get_object_or_404(Event, slug=slug)
+    return render(request, 'event/detail.html', {"event": event})
 
-class EventUpdateView(UpdateView):
-    model = Event
-    template_name = 'event/update.html'
-    form_class = EventForm
+def event_update(request, slug):
+    event = get_object_or_404(Event, slug=slug)
 
-class EventDeleteView(DeleteView):
-    model = Event
-    success_url = '/event/'
+    if request.user != event.creator:
+        return HttpResponseForbidden("You are not allowed to edit this event.")
 
-    def post(self, request, *args, **kwargs):
-        event = self.get_object()
+    if request.method == 'POST':
+        form = EventForm(request.POST, request.FILES, instance=event)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('event_detail', kwargs={'slug': event.slug}))
+    else:
+        form = EventForm(instance=event)
 
-        if event.creator != request.user:
-            return HttpResponseRedirect(reverse('event:index'))
+    return render(request, 'event/update.html', {'form': form, 'event': event, 'errors': form.errors})
 
-        event.delete()
-        return HttpResponseRedirect(self.success_url)
+def event_delete(request, slug):
+    event = get_object_or_404(Event, slug=slug)
+
+    if request.user != event.creator:
+        return HttpResponseForbidden("You are not allowed to edit this event.")
+
+    event.delete()
+    return redirect('event')
 
 @login_required
 def event_create(request):
@@ -43,9 +51,32 @@ def event_create(request):
             event = form.save(commit=False)
             event.creator = request.user
             event.save()
+            creator_profile = get_object_or_404(UserProfile, user=request.user)
+            event.participants.add(creator_profile)
             return redirect(f'event_detail', slug=event.slug)
         else:
             errors = form.errors
+            return render(request, 'event/create.html', {'form': form, 'errors': errors})
 
     form = EventForm()
     return render(request, 'event/create.html', {'form': form, 'errors': errors})
+
+def not_auth_event_create(request):
+    return render(request, 'event/create.html')
+
+
+def registration_to_event(request, slug, username):
+    event = get_object_or_404(Event, slug=slug)
+    user = get_object_or_404(UserProfile, user__username=username)
+
+    if len(event.participants.all()) < event.max_participants:
+
+        if user not in event.participants.all():
+            event.participants.add(user)
+            event.save()
+
+        return redirect('event_detail', slug=slug)
+
+    else:
+        error = 'the maximum number of people registered'
+        return render(request, 'event/detail.html', {"event": event, 'errors': error})

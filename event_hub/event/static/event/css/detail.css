@@ -22,8 +22,11 @@
 }
 
 .event-details-event-information {
-    margin-top: 5%;
     margin-left: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    float: left;
 }
 
 .event-details-description {
@@ -50,7 +53,34 @@
 }
 
 .event-update-btn {
+    width: 20%;
     background-color: #eb5959;
     border-width: 0;
     border-radius: 5px;
+}
+
+.event-update-btn:active {
+    background-color: goldenrod;
+}
+
+a {
+    text-decoration: none;
+}
+
+.form-for-delete, .form-for-update {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+}
+
+.list-participants {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.list-participants img {
+    width: 20px;
+    height: auto;
 }

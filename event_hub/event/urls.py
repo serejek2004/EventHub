@@ -3,8 +3,10 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='event'),
+    path('create/auth-error', views.not_auth_event_create, name='not_auth_event_create'),
     path('create', views.event_create, name='event_create'),
-    path('<slug:slug>', views.EventDetailView.as_view(), name='event_detail'),
-    path('<slug:slug>/update', views.EventUpdateView.as_view(), name='event_update'),
-    path('<slug:slug>/delete', views.EventDeleteView.as_view(), name='event_delete'),
+    path('<slug:slug>', views.event_details, name='event_detail'),
+    path('<slug:slug>/update', views.event_update, name='event_update'),
+    path('<slug:slug>/delete', views.event_delete, name='event_delete'),
+    path('<slug:slug>/<str:username>', views.registration_to_event, name='registration_to_event'),
 ]

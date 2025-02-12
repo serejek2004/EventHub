@@ -1,0 +1,95 @@
+.profile-content {
+    color: white;
+    margin-top: 5%;
+    margin-left: 10%;
+    width: 80%;
+    height: 80%;
+}
+
+.profile-image-and-information {
+    height: 40%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.profile-image {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-image img {
+    height: 100%;
+    width: auto;
+}
+
+.profile-information {
+    margin-left: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    float: left;
+}
+
+.profile-biography {
+    width: 95%;
+    margin-top: 2.5%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    text-align: justify;
+    word-wrap: break-word;
+}
+
+.profile-information ul {
+    list-style: none;
+    padding: 0;
+}
+
+.profile-information ul li {
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+
+.profile-information ul p {
+    font-weight: normal;
+    margin-left: 20px;
+}
+
+.not-auth-user-information {
+    margin-top: 20%;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.not-auth-user-buttons {
+    width: 50%;
+    height: 50%;
+    margin-left: 25%;
+    margin-top: 5%;
+    display: flex;
+    justify-items: center;
+    justify-content: space-evenly;
+}
+
+.not-auth-user-information a {
+    width: 20%;
+}
+
+.profile-edit-button {
+    margin-top: 2.5%;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-edit-button a {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+}
