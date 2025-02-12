@@ -1,13 +1,21 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'main/css/base.css' %}">
+{% endblock css %}
+
 {% block title %}
 EventHub
 {% endblock title %}
 
 {% block content %}
     <div class="home-page-welcome-txt">
-        <h1>Welcome!</h1>
+        {% if user.is_authenticated %}
+            <h1>Welcome {{ user }}!</h1>
+        {% else %}
+            <h1>Welcome!</h1>
+        {% endif %}
         <p class="event-welcome-txt">EventHub — is an event management platform where users can create events,
             register for them, and interact with other participants. Each user has their own profile with
             personal information and a photo. They can view available active events, register for them,

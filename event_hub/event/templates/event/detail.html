@@ -26,17 +26,36 @@
             <p><strong>Description:</strong> {{ event.description|linebreaks }}</p>
         </section>
         <section class="event-details-participants">
-            <p><strong>Participants ({{ event.participants }})</strong></p>
+            <p><strong>Participants ({{ event.participants.count }})</strong></p>
+            <div class="list-participants">
+                {% for participant in event.participants.all %}
+                    <a href="/profile/{{ participant.slug }}" style="text-decoration: none; color: white">
+                        <img src="{{ participant.profile_picture.url }}">  {{ participant.user.first_name|capfirst }}
+                    </a>
+                {% empty %}
+                    <li>No participants yet.</li>
+                {% endfor %}
+            </div>
         </section>
         <section class="event-details-update-btn">
             {% if event.creator.id == request.user.id %}
-                <a href="{% url 'event_update' event.slug %}">
+                <a class="form-for-update" href="{% url 'event_update' event.slug %}">
                     <button class="event-update-btn">Edit Event</button>
                 </a>
                 <form class="form-for-delete" method="post" action="{% url 'event_delete' event.slug %}">
                     {% csrf_token %}
                     <button type="submit" class="event-update-btn">Delete Event</button>
                 </form>
+            {% else %}
+                {% if user.is_authenticated %}
+                    {% if errors %}
+                        <p style="color: #eb5959">{{ errors }}</p>
+                    {% else %}
+                        <a class="form-for-update" href="{% url 'registration_to_event' slug=event.slug username=user.username %}">
+                            <button class="event-update-btn">Subscribe</button>
+                        </a>
+                    {% endif %}
+                {% endif %}
             {% endif %}
         </section>
     </div>

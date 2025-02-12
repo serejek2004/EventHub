@@ -18,7 +18,7 @@
                 {% for event in data %}
                     <li class="event-container">
                         <div class="img-and-details">
-                            <img class="event-image" src="{{ event.event_image.url }}" >
+                            <img class="event-image" src="{{ event.event_image.url }}" alt="Event img" >
                             <a class="a-event-details" href="{% url 'event_detail' slug=event.slug %}"><button class="event-details">Details</button></a>
                         </div>
                         <div class="event-info">

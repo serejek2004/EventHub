@@ -1,0 +1,39 @@
+{% extends 'profile/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'profile/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'profile/css/update.css' %}">
+{% endblock css %}
+
+{% block title %}
+    {{ profile.user.username|capfirst }}
+{% endblock title %}
+
+{% block content %}
+    <div class="profile-update-form">
+        <h1>Update {{ profile.user.username|capfirst }} profile</h1>
+        <form method="post" enctype="multipart/form-data">
+            {{ form.first_name }}<br>
+            {{ form.last_name }}<br>
+            {{ form.email }}<br>
+            {{ form.age }}<br>
+            {{ form.biography }}<br>
+            {{ form.profile_picture }}<br>
+            {% if errors %}
+                {% for field in form %}
+                    {% if field.errors %}
+                        <ul class="errorlist" style="list-style: none; color: #eb5959; padding: 0">
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <button class="btn btn-success" type="submit">Update event</button>
+            {% csrf_token %}
+        </form>
+    </div>
+{% endblock content %}

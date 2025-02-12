@@ -33,7 +33,6 @@ a {
     background-color: #eb5959;
     border-radius: 20px;
     border-width: 0;
-    transition: transform .2s ease;
 }
 
 .reg-login-logout-btn:active {
