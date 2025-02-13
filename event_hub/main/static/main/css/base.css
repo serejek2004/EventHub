@@ -1,0 +1,51 @@
+body {
+    background-color: #282828;
+}
+
+.home-page-welcome-txt {
+    color: white;
+    width: 50%;
+    height: 50%;
+    margin-left: 25%;
+    margin-top: 15%;
+    text-align: center;
+}
+
+.event-welcome-txt {
+    font-size: 22px;
+}
+
+.auth-button-container {
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.auth-button-container a {
+    width: 35%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+}
+
+a {
+    width: 20%;
+}
+
+.reg-login-logout-btn {
+    width: 100%;
+    color: #171717;
+    font-size: 28px;
+    background-color: #eb5959;
+    border-radius: 20px;
+    border-width: 0;
+    transition: transform .6s ease;
+}
+
+.reg-login-logout-btn:hover {
+    background-color: #eb5050;
+    text-decoration: none;
+    transform: scale(1.05);
+}

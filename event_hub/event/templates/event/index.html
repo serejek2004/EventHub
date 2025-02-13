@@ -1,0 +1,36 @@
+{% extends 'event/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'event/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'event/css/index.css' %}">
+{% endblock css %}
+
+{% block title %}
+    Events
+{% endblock title %}
+
+{% block content %}
+    <div class="events-list-page-txt">
+        <h1 class="name-list">Events</h1>
+        <div class="event-list">
+            <ul>
+                {% for event in data %}
+                    <li class="event-container">
+                        <div class="img-and-details">
+                            <img class="event-image" src="{{ event.event_image.url }}" alt="Event img" >
+                            <a class="a-event-details" href="{% url 'event_detail' slug=event.slug %}"><button class="event-details">Details</button></a>
+                        </div>
+                        <div class="event-info">
+                            <p><strong>Title:</strong> {{ event.title }}</p>
+                            <p><strong>Date:</strong> {{ event.date_time }}</p>
+                            <p><strong>Location:</strong> {{ event.location }}</p>
+                            <p><strong>Max Participants:</strong> {{ event.max_participants }}</p>
+                            <p><strong>Creator:</strong> {{ event.creator.first_name|capfirst }}</p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock content %}
