@@ -15,6 +15,17 @@ def index(request):
 
 def event_details(request, slug):
     event = get_object_or_404(Event, slug=slug)
+
+    if request.user.is_authenticated:
+        user = get_object_or_404(UserProfile, user__id=request.user.id)
+
+        if user in event.participants.all():
+            data = {"event": event, 'registered': True}
+        else:
+            data = {"event": event, 'registered': False}
+
+        return render(request, 'event/detail.html', data)
+
     return render(request, 'event/detail.html', {"event": event})
 
 def event_update(request, slug):
@@ -44,7 +55,6 @@ def event_delete(request, slug):
 
 @login_required
 def event_create(request):
-    errors = ''
     if request.method == 'POST':
         form = EventForm(request.POST, request.FILES)
         if form.is_valid():
@@ -55,28 +65,45 @@ def event_create(request):
             event.participants.add(creator_profile)
             return redirect(f'event_detail', slug=event.slug)
         else:
-            errors = form.errors
-            return render(request, 'event/create.html', {'form': form, 'errors': errors})
+            data = {'form': form, 'errors': form.errors}
+            return render(request, 'event/create.html', data)
 
     form = EventForm()
-    return render(request, 'event/create.html', {'form': form, 'errors': errors})
+    data = {'form': form, 'errors': form.errors}
+    return render(request, 'event/create.html', data)
 
 def not_auth_event_create(request):
     return render(request, 'event/create.html')
 
 
 def registration_to_event(request, slug, username):
+    print("reg")
     event = get_object_or_404(Event, slug=slug)
     user = get_object_or_404(UserProfile, user__username=username)
 
-    if len(event.participants.all()) < event.max_participants:
+    if event.participants.count() < event.max_participants:
 
         if user not in event.participants.all():
             event.participants.add(user)
             event.save()
+        else:
+            data = {"event": event, 'registered': True}
+            return render(request, 'event/detail.html', data)
 
         return redirect('event_detail', slug=slug)
 
     else:
-        error = 'the maximum number of people registered'
-        return render(request, 'event/detail.html', {"event": event, 'errors': error})
+        data = {"event": event, 'errors': 'the maximum number of people registered'}
+        return render(request, 'event/detail.html', data)
+
+
+def unregister_to_event(request, slug, username):
+    event = get_object_or_404(Event, slug=slug)
+    user = get_object_or_404(UserProfile, user__username=username)
+    print("lol")
+    if user in event.participants.all():
+        print("hello")
+        event.participants.remove(user)
+        event.save()
+
+    return redirect('event_detail', slug=slug)

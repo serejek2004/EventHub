@@ -25,6 +25,7 @@ class EventForm(ModelForm):
             'date_time': DateTimeInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Event Date',
+                'type': 'datetime-local',
             }),
             'max_participants': NumberInput(attrs={
                 'class': 'form-control',

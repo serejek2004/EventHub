@@ -1,6 +1,5 @@
 .event-details-container {
     width: 80%;
-    height: 100vh;
     margin-top: 5%;
     margin-left: 10%;
     color: white;
@@ -57,14 +56,23 @@
     background-color: #eb5959;
     border-width: 0;
     border-radius: 5px;
+    transition: transform .6s ease;
 }
 
-.event-update-btn:active {
-    background-color: goldenrod;
+.event-update-btn:hover {
+    background-color: #eb5050;
+    text-decoration: none;
+    transform: scale(1.05);
 }
 
 a {
     text-decoration: none;
+    transition: transform .6s ease;
+}
+
+a:hover {
+    color: #eb5959 !important;
+    transform: scale(1.05);
 }
 
 .form-for-delete, .form-for-update {

@@ -1,6 +1,8 @@
 body {
-    background-color: #2c2c2c;
     display: flex;
+    background: linear-gradient(45deg, #161616 25%, #151515 25%, #151515 50%, #191919 50%, #171717 75%, #161616 75%, #191919 100%);
+    background-size: 400px 400px;
+    animation: move-pattern 4s infinite linear;
 }
 
 .content {
@@ -9,15 +11,35 @@ body {
     height: 100vh;
 }
 
+@keyframes move-pattern {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 400px 400px;
+    }
+}
+
 aside {
     position: fixed;
     float: left;
-    background-color: #181818;
     width: 20%;
     padding: 2.5%;
     height: 100vh;
     color: #fff;
     border-right: 5px solid #4d4d4d;
+    background: linear-gradient(45deg, #161616 25%, #151515 25%, #151515 50%, #191919 50%, #171717 75%, #161616 75%, #191919 100%);
+    background-size: 400px 400px;
+    animation: move-pattern-aside 4s infinite linear;
+}
+
+@keyframes move-pattern-aside {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 400px 400px;
+    }
 }
 
 aside img {

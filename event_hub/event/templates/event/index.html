@@ -26,7 +26,7 @@
                             <p><strong>Date:</strong> {{ event.date_time }}</p>
                             <p><strong>Location:</strong> {{ event.location }}</p>
                             <p><strong>Max Participants:</strong> {{ event.max_participants }}</p>
-                            <p><strong>Creator:</strong> {{ event.creator.username }}</p>
+                            <p><strong>Creator:</strong> {{ event.creator.first_name|capfirst }}</p>
                         </div>
                     </li>
                 {% endfor %}

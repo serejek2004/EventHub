@@ -29,7 +29,7 @@ ul li {
 }
 
 .event-info {
-    width: 30%;
+    width: 40%;
     margin-left: 2.5%;
 }
 
@@ -54,6 +54,7 @@ ul li {
     border-width: 0;
     border-radius: 5px;
     width: 100%;
+    transition: transform .6s ease;
 }
 
 .a-event-details {
@@ -63,6 +64,8 @@ ul li {
     width: 30%;
 }
 
-.event-details:active {
-    background-color: goldenrod;
+.event-details:hover {
+    background-color: #eb5050;
+    text-decoration: none;
+    transform: scale(1.05);
 }

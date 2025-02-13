@@ -1,8 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from profile.models import UserProfile
-
 
 class UserRegistrationForm(forms.Form):
 
@@ -69,18 +67,21 @@ class UserRegistrationForm(forms.Form):
         password = cleaned_data.get("password")
         password_confirm = cleaned_data.get("password_confirm")
 
-        if username and User.objects.filter(username=username).exists():
+        if username.lower() and User.objects.filter(username=username).exists():
             raise forms.ValidationError("Username already in use.")
         if email and User.objects.filter(email=email).exists():
             raise forms.ValidationError("Email already in use.")
+        if len(password) < 8:
+            raise forms.ValidationError("Password must be at least 8 characters long.")
         if password and password_confirm and password != password_confirm:
             raise forms.ValidationError("Passwords do not match.")
 
         return cleaned_data
 
     def save(self):
+        username = self.cleaned_data.get('username')
         user = User.objects.create_user(
-            username=self.cleaned_data['username'],
+            username=username.lower(),
             first_name=self.cleaned_data['first_name'],
             last_name=self.cleaned_data['last_name'],
             email=self.cleaned_data['email'],
@@ -105,6 +106,7 @@ class UserLoginForm(forms.Form):
             'placeholder': 'Password',
         })
     )
+
 
 class UserProfileInfoUpdateForm(forms.Form):
     first_name = forms.CharField(
@@ -154,9 +156,15 @@ class UserProfileInfoUpdateForm(forms.Form):
         })
     )
 
-    class Meta:
-        model = UserProfile
-        fields = ['age']
+    def clean(self):
+        cleaned_data = super().clean()
+        email = cleaned_data.get('email')
+
+        if email:
+            if User.objects.filter(email=email).exclude(id=self.user.id).exists():
+                raise forms.ValidationError("This email is already in use by another user.")
+
+        return cleaned_data
 
     def save(self, user):
         user.first_name = self.cleaned_data['first_name']
@@ -176,22 +184,52 @@ class UserProfileInfoUpdateForm(forms.Form):
         return user
 
 
-class UserProfileBiographyUpdateForm(forms.Form):
-    biography = forms.CharField(
-        max_length=2000,
+class PasswordUpdateForm(forms.Form):
+    old_password = forms.CharField(
+        max_length=50,
         required=True,
-        widget=forms.Textarea(attrs={
+        widget=forms.PasswordInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Biography',
+            'placeholder': 'Old password',
+        })
+    )
+    new_password = forms.CharField(
+        max_length=50,
+        required=True,
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'New password',
+        })
+    )
+    new_password_confirm = forms.CharField(
+        max_length=50,
+        required=True,
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'New password',
         })
     )
 
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user = user
 
-class UserProfilePictureUpdateForm(forms.Form):
-    profile_picture = forms.ImageField(
-        required=True,
-        widget=forms.FileInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Profile Picture',
-        })
-    )
+    def clean(self):
+        cleaned_data = super().clean()
+        old_password = cleaned_data.get('old_password')
+        new_password = cleaned_data.get('new_password')
+        new_password_confirm = cleaned_data.get('new_password_confirm')
+
+        if len(new_password) < 8:
+            raise forms.ValidationError("New password must be at least 8 characters.")
+
+        if new_password and new_password_confirm and new_password != new_password_confirm:
+            raise forms.ValidationError("Passwords do not match.")
+
+        if old_password and old_password == new_password:
+            raise forms.ValidationError("The new password cannot be the same as the old password.")
+
+        if old_password and not self.user.check_password(old_password):
+            raise forms.ValidationError("Incorrect old password.")
+
+        return cleaned_data

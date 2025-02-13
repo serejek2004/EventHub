@@ -83,6 +83,7 @@
 
 .profile-edit-button {
     margin-top: 2.5%;
+    margin-bottom: 2.5%;
     display: flex;
     justify-content: center;
 }

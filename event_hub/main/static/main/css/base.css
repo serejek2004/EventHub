@@ -1,12 +1,11 @@
 body {
     background-color: #282828;
-    overflow: hidden;
 }
 
 .home-page-welcome-txt {
     color: white;
     width: 50%;
-    height: 100%;
+    height: 50%;
     margin-left: 25%;
     margin-top: 15%;
     text-align: center;
@@ -17,9 +16,18 @@ body {
 }
 
 .auth-button-container {
-    margin-top: 5%;
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
+}
+
+.auth-button-container a {
+    width: 35%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
 }
 
 a {
@@ -33,8 +41,11 @@ a {
     background-color: #eb5959;
     border-radius: 20px;
     border-width: 0;
+    transition: transform .6s ease;
 }
 
-.reg-login-logout-btn:active {
-    background-color: goldenrod;
+.reg-login-logout-btn:hover {
+    background-color: #eb5050;
+    text-decoration: none;
+    transform: scale(1.05);
 }

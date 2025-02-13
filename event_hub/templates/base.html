@@ -15,8 +15,8 @@
 </head>
 <body>
     <aside>
-        <a href="{% url 'home' %}"><img src="{% static 'img/logotype.png' %}"></a>
-        <h3>Navigation</h3>
+        <a href="{% url 'home' %}"><img src="{% static 'img/logotype3.png' %}"></a>
+        <h3>EventHub</h3>
         <ul>
             <a href="{% url 'home' %}"><li><i class="fas fa-home"></i> Home</li></a>
             <a href="{% url 'event' %}"><li><i class="fas fa-newspaper"></i> Events</li></a>
@@ -26,14 +26,18 @@
                 </a>
                 <a href="{% url 'event_create' %}">
                     <li>
-                        <button class="btn btn-info"><i class="fas fa-plus-circle"></i> Add event</button>
+                        <button class="btn btn-info" style="background-color: #eb5959; border: 0">
+                            <i class="fas fa-plus-circle"></i> Add event
+                        </button>
                     </li>
                 </a>
             {% else %}
                 <a href="{% url 'not_auth_profile' %}"><li><i class="fas fa-user"></i> Profile</li></a>
                 <a href="{% url 'not_auth_event_create' %}">
                     <li>
-                        <button class="btn btn-info"><i class="fas fa-plus-circle"></i> Add event</button>
+                        <button class="btn btn-info" style="background-color: #eb5959; border: 0">
+                            <i class="fas fa-plus-circle"></i> Add event
+                        </button>
                     </li>
                 </a>
             {% endif %}
