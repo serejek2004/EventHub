@@ -3,7 +3,27 @@ body {
     background: linear-gradient(45deg, #161616 25%, #151515 25%, #151515 50%, #191919 50%, #171717 75%, #161616 75%, #191919 100%);
     background-size: 400px 400px;
     animation: move-pattern 4s infinite linear;
+    overflow-x: hidden;
 }
+
+body::-webkit-scrollbar {
+    width: 10px; /* Ширина скролбару */
+}
+
+body::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3); /* Темний напівпрозорий фон */
+    border-radius: 5px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: rgba(235, 89, 89, 0.7); /* Червоний відтінок з прозорістю */
+    border-radius: 5px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: rgba(235, 89, 89, 0.9); /* Трохи яскравіший при наведенні */
+}
+
 
 .content {
     margin-left: 20%;
@@ -26,6 +46,7 @@ aside {
     width: 20%;
     padding: 2.5%;
     height: 100vh;
+    font-size: 20px;
     color: #fff;
     border-right: 5px solid #4d4d4d;
     background: linear-gradient(45deg, #161616 25%, #151515 25%, #151515 50%, #191919 50%, #171717 75%, #161616 75%, #191919 100%);

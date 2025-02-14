@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Event, Comment
+from .models import Event, EventComment, LikeDislikeComment
+
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
@@ -9,8 +10,15 @@ class EventAdmin(admin.ModelAdmin):
     filter_horizontal = ('participants',)
 
 
-@admin.register(Comment)
+@admin.register(EventComment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('author', 'event', 'created_at')
     list_filter = ('created_at',)
     search_fields = ('author__username', 'event__title', 'text')
+
+
+@admin.register(LikeDislikeComment)
+class LikeDislikeCommentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'comment', 'value')
+    list_filter = ('user',)
+    search_fields = ('user__username', 'comment__event__title')

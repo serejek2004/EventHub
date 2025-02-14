@@ -2,7 +2,6 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
-
 from profile.models import UserProfile
 
 
@@ -33,16 +32,33 @@ class Event(models.Model):
         verbose_name = "Event"
         verbose_name_plural = "Events"
 
-class Comment(models.Model):
+
+class EventComment(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='comments')
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.TextField()
+    author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    text = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Comment by {self.author} on {self.event}"
+        return f"Comment by {self.author} on {self.event} id {self.id}"
 
     class Meta:
         ordering = ['-created_at']
         verbose_name = "Comment"
         verbose_name_plural = "Comments"
+
+
+class LikeDislikeComment(models.Model):
+    LIKE = 1
+    DISLIKE = -1
+    CHOICES = (
+        (LIKE, "Like"),
+        (DISLIKE, "Dislike"),
+    )
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.ForeignKey(EventComment, on_delete=models.CASCADE, related_name='likes_dislikes')
+    value = models.SmallIntegerField(choices=CHOICES)
+
+    class Meta:
+        unique_together = ('user', 'comment')
