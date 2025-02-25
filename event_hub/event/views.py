@@ -6,9 +6,11 @@ from profile.models import UserProfile
 from .models import Event, EventComment, LikeDislikeComment
 from .forms import EventCommentForm, EventForm
 
+
 def index(request):
     events = Event.objects.all().order_by('date_time')
     return render(request, 'event/index.html', {'data': events, 'user': request.user})
+
 
 def event_details(request, slug):
     event = get_object_or_404(Event, slug=slug)
@@ -25,10 +27,10 @@ def event_details(request, slug):
 
         return render(request, 'event/detail.html', data)
 
-
     data = {"event": event, 'comments_with_info': comment_with_info}
     print(data)
     return render(request, 'event/detail.html', data)
+
 
 def event_update(request, slug):
     event = get_object_or_404(Event, slug=slug)
@@ -46,6 +48,7 @@ def event_update(request, slug):
 
     return render(request, 'event/update.html', {'form': form, 'event': event, 'errors': form.errors})
 
+
 def event_delete(request, slug):
     event = get_object_or_404(Event, slug=slug)
 
@@ -54,6 +57,7 @@ def event_delete(request, slug):
 
     event.delete()
     return redirect('event')
+
 
 @login_required
 def event_create(request):
