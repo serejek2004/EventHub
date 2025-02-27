@@ -19,7 +19,7 @@
                     {% if profile.profile_picture %}
                         <img src="{{ profile.profile_picture.url }}"/>
                     {% else %}
-                        <img src="{% static 'img/image-solid.svg' %}">
+                        <img src="{% static 'img/default_profile_img.png' %}">
                     {% endif %}
                 </div>
                 <div class="profile-information">
@@ -46,7 +46,7 @@
         </div>
     {% else %}
         <section class="not-auth-user-information">
-            <h1>Log in to view profiles</h1>
+            <h1>Log in to do it</h1>
         </section>
         <section class="not-auth-user-buttons">
             <a href="{% url 'login' %}"><button class="reg-login-logout-btn">Login</button></a>

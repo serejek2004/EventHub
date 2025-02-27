@@ -21,9 +21,12 @@
             {{ form.password }}<br>
             {{ form.password_confirm }}<br>
 
-            {% if form.non_field_errors %}
-                <ul class="errorlist" style="list-style: none; color: #eb5959; padding: 0">
+            {% if form.errors %}
+                <ul class="errorlist" style="list-style: none; color: #eb5959; padding: 0; text-align: center">
                     {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                    {% for error in form.username.errors %}
                         <li>{{ error }}</li>
                     {% endfor %}
                 </ul>

@@ -30,7 +30,13 @@
             <div class="list-participants" id="list-participants">
                 {% for participant in event.participants.all %}
                     <a href="/profile/{{ participant.slug }}" style="text-decoration: none; color: white">
-                        <img src="{{ participant.profile_picture.url }}">
+                        <img src="
+                            {% if participant.profile_picture %}
+                                {{ participant.profile_picture.url }}
+                            {% else %}
+                                {% static 'img/default_profile_img.png' %}
+                            {% endif %}"
+                             alt="Profile Picture">
                         {{ participant.user.first_name|capfirst }}
                         {{ participant.user.last_name|capfirst }}
                     </a>
@@ -44,7 +50,12 @@
             {% for item in comments_with_info %}
                 <div class="comment-container">
                     <div class="author-image">
-                        <img class="author-picture" src="{{ item.comment.author.profile_picture.url }}">
+                        <img class="author-picture" src="
+                        {% if item.comment.author.profile_picture %}
+                            {{ item.comment.author.profile_picture.url }}
+                        {% else %}
+                            {% static 'img/default_profile_img.png' %}
+                        {% endif %}">
                     </div>
                     <div class="author-container" style="display: flex; flex-direction: column;">
                         <p class="author-name">
@@ -83,10 +94,10 @@
                                     </a>
                                 {% endif %}
                             {% else %}
-                                <a href="{% url 'login' %}">
+                                <a href="{% url 'not_auth_profile' %}">
                                     {{ item.info.likes }}<i class="far fa-thumbs-up" style="margin-left: 5px"></i>
                                 </a> |
-                                <a href="{% url 'login' %}">
+                                <a href="{% url 'not_auth_profile' %}">
                                     {{ item.info.dislikes }}<i class="far fa-thumbs-down" style="margin-left: 5px"></i>
                                 </a>
                             {% endif %}
@@ -97,12 +108,14 @@
             {% endfor %}
         </section>
         <section class="leave-comment-container" id="leave-comment-container">
-            {% if form %}
-                <form method="post">
-                    {% csrf_token %}
-                    {{ form.text }}
-                    <button class="btn btn-success" type="submit">Add comment</button>
-                </form>
+            {% if user.is_authenticated %}
+                {% if form %}
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.text }}
+                        <button class="btn btn-success" type="submit">Add comment</button>
+                    </form>
+                {% endif %}
             {% endif %}
         </section>
         <section class="event-details-update-btn">

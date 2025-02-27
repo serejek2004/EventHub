@@ -17,7 +17,6 @@
 
 .event-details-img-container {
     max-width: 40%;
-    max-height: 500px;
     width: auto;
     height: auto;
 }
@@ -148,7 +147,7 @@
 }
 
 .event-update-btn {
-    width: 20%;
+    width: 40%;
     background-color: #eb5959;
     border-width: 0;
     border-radius: 5px;
